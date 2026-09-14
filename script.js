@@ -162,19 +162,9 @@ faqItems.forEach(item => {
 
 });
 
-
 /* =========================
    CONTACT FORM
 ========================= */
-
-/*
-   The contact form is submitted directly
-   to Web3Forms.
-
-   Do NOT use event.preventDefault()
-   here because it would stop the form
-   from being submitted.
-*/
 
 const contactForm =
     document.getElementById("contactForm");
@@ -182,13 +172,173 @@ const contactForm =
 const formMessage =
     document.getElementById("formMessage");
 
+const submitButton =
+    document.getElementById("submitButton");
 
-if (contactForm && formMessage) {
 
-    contactForm.addEventListener("submit", () => {
+if (contactForm) {
 
-        formMessage.textContent =
-            "Sending your enquiry...";
+    contactForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+
+        /* Show sending message */
+
+        if (formMessage) {
+
+            formMessage.textContent =
+                "Sending your enquiry...";
+
+            formMessage.className =
+                "form-message";
+
+        }
+
+
+        /* Disable button while sending */
+
+        if (submitButton) {
+
+            submitButton.disabled = true;
+
+            submitButton.textContent =
+                "Sending...";
+
+        }
+
+
+        try {
+
+            /* Collect form data */
+
+            const formData =
+                new FormData(contactForm);
+
+
+            /* Convert form data to JSON */
+
+            const object =
+                Object.fromEntries(formData);
+
+            const json =
+                JSON.stringify(object);
+
+
+            /* Send to Web3Forms */
+
+            const response =
+                await fetch(
+                    "https://api.web3forms.com/submit",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json"
+                        },
+
+                        body: json
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            /* Successful submission */
+
+            if (response.status === 200 && result.success) {
+
+                if (formMessage) {
+
+                    formMessage.textContent =
+                        "Thank you. Your enquiry has been sent successfully.";
+
+                    formMessage.className =
+                        "form-message success";
+
+                }
+
+
+                /* Clear the form */
+
+                contactForm.reset();
+
+
+                /* Restore button */
+
+                if (submitButton) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Send Enquiry";
+
+                }
+
+
+            } else {
+
+                /* Web3Forms returned an error */
+
+                if (formMessage) {
+
+                    formMessage.textContent =
+                        result.message ||
+                        "Your enquiry could not be sent. Please try again.";
+
+                    formMessage.className =
+                        "form-message error";
+
+                }
+
+
+                if (submitButton) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Send Enquiry";
+
+                }
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Web3Forms error:",
+                error
+            );
+
+
+            if (formMessage) {
+
+                formMessage.textContent =
+                    "Something went wrong. Please try again or contact the advocate directly.";
+
+                formMessage.className =
+                    "form-message error";
+
+            }
+
+
+            if (submitButton) {
+
+                submitButton.disabled = false;
+
+                submitButton.textContent =
+                    "Send Enquiry";
+
+            }
+
+        }
 
     });
 

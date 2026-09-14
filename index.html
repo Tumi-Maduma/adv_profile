@@ -755,27 +755,21 @@
         <form
             class="contact-form"
             id="contactForm"
-            action="https://api.web3forms.com/submit"
-            method="POST"
         >
 
-            <!-- Web3Forms Access Key -->
+            <!-- Web3Forms -->
             <input
                 type="hidden"
                 name="access_key"
-                value="YOUR_ACCESS_KEY_HERE"
+                value="e565ddfa-fc38-49a5-b34e-b443c886e444"
             >
 
-
-            <!-- Email subject -->
             <input
                 type="hidden"
                 name="subject"
                 value="New Enquiry - Advocate Mmati Essie Mashilo"
             >
 
-
-            <!-- Name displayed as sender -->
             <input
                 type="hidden"
                 name="from_name"
@@ -785,7 +779,6 @@
 
             <div class="form-row">
 
-                <!-- FULL NAME -->
                 <div class="form-group">
 
                     <label for="name">
@@ -803,7 +796,6 @@
                 </div>
 
 
-                <!-- EMAIL -->
                 <div class="form-group">
 
                     <label for="email">
@@ -823,7 +815,6 @@
             </div>
 
 
-            <!-- TELEPHONE -->
             <div class="form-group">
 
                 <label for="phone">
@@ -840,7 +831,6 @@
             </div>
 
 
-            <!-- NATURE OF ENQUIRY -->
             <div class="form-group">
 
                 <label for="matter">
@@ -902,7 +892,6 @@
             </div>
 
 
-            <!-- MESSAGE -->
             <div class="form-group">
 
                 <label for="message">
@@ -920,10 +909,10 @@
             </div>
 
 
-            <!-- SUBMIT BUTTON -->
             <button
                 type="submit"
                 class="button button-primary"
+                id="submitButton"
             >
                 Send Enquiry
             </button>
@@ -935,7 +924,6 @@
             </p>
 
 
-            <!-- FORM STATUS MESSAGE -->
             <div
                 id="formMessage"
                 aria-live="polite"
