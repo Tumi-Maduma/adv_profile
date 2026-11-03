@@ -162,9 +162,7 @@ faqItems.forEach(item => {
 
 });
 
-/* =========================
-   CONTACT FORM
-========================= */
+/* CONTACT FORM */
 
 const contactForm =
     document.getElementById("contactForm");
